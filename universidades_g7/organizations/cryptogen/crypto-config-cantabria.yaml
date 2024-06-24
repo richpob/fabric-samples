@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------
 PeerOrgs:
   - Name: Cantabria
-    Domain: cantabria.universidades.com
+    Domain: cantabria.universidadesg7.com
     EnableNodeOUs: true
     Template:
       Count: 1
