@@ -12,6 +12,7 @@ cd ~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7
 # Detener y eliminar todos los contenedores Docker
 docker ps -a -q
 # docker stop $(docker ps -q)
+docker ps -q | xargs -r docker stop
 # Eliminar todos los volúmenes y redes no utilizadas
 docker volume prune
 docker network prune
@@ -21,8 +22,9 @@ rm -rf organizations/ordererOrganizations
 rm -rf channel-artifacts/
 mkdir channel-artifacts  # Crear un directorio para los nuevos artefactos del canal
 # Configurar las variables de entorno necesarias para Hyperledger Fabric
+echo $PATH
 export PATH=${PWD}/../bin:${PWD}:$PATH
-export FABRIC_CFG_PATH=${PWD}/config
+export FABRIC_CFG_PATH=${PWD}/../config
 # Generar certificados criptográficos para las organizaciones
 cryptogen generate --config=./organizations/cryptogen/crypto-config-iebs.yaml --output="organizations"
 cryptogen generate --config=./organizations/cryptogen/crypto-config-cantabria.yaml --output="organizations"
@@ -33,30 +35,34 @@ docker-compose -f docker/docker-compose-universidades.yaml up -d
 # La red ya está arrancada con 1 orderer, 2 organizaciones y 2 CouchDBs
 # Crear los canales
 # Configurar la variable de entorno para la generación de artefactos de configuración
-export FABRIC_CFG_PATH=${PWD}/configtx
+#export FABRIC_CFG_PATH=${PWD}/configtx
 # Generar el bloque génesis para el canal
 #export FABRIC_CFG_PATH=$PWD
 #configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 #configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/universidadeschannel.tx -channelID universidadeschannel
 #peer channel create -o orderer.example.com:7050 -c universidadeschannel -f ./channel-artifacts/universidadeschannel.tx
 configtxgen -profile UniversidadesGenesis -outputBlock ./channel-artifacts/universidadeschannel.block -channelID universidadeschannel
+
 # Configurar las variables de entorno necesarias para el ordenamiento
 export FABRIC_CFG_PATH=${PWD}/../config
 export ORDERER_CA=${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/msp/tlscacerts/tlsca.universidades.com-cert.pem
 export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/tls/server.crt
 export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/tls/server.key
+
 # Unir el canal al ordenamiento
 osnadmin channel join --channelID universidadeschannel --config-block ./channel-artifacts/universidadeschannel.block -o localhost:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+
 # Listar los canales del ordenamiento
 osnadmin channel list -o localhost:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
-# Configurar las variables de entorno para los peers de Madrid y Bogotá
+
+# Configurar las variables de entorno para los peers de IEBS y CANTABRIA
 export CORE_PEER_TLS_ENABLED=true
-export PEER0_MADRID_CA=${PWD}/organizations/peerOrganizations/madrid.universidades.com/peers/peer0.madrid.universidades.com/tls/ca.crt
-export CORE_PEER_LOCALMSPID="MadridMSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MADRID_CA
-export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/madrid.universidades.com/users/Admin@madrid.universidades.com/msp
+export PEER0_MADRID_CA=${PWD}/organizations/peerOrganizations/iebs.universidades.com/peers/peer0.madrid.universidades.com/tls/ca.crt
+export CORE_PEER_LOCALMSPID="IEBSMSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_IEBS_CA
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/iebs.universidades.com/users/Admin@madrid.universidades.com/msp
 export CORE_PEER_ADDRESS=localhost:7051
-# Unir el peer de Madrid al canal
+# Unir el peer de Iebs al canal
 peer channel join -b ./channel-artifacts/universidadeschannel.block
 # Configurar las variables de entorno para el peer de Bogotá
 export PEER0_BOGOTA_CA=${PWD}/organizations/peerOrganizations/bogota.universidades.com/peers/peer0.bogota.universidades.com/tls/ca.crt
@@ -70,7 +76,67 @@ peer channel join -b ./channel-artifacts/universidadeschannel.block
 
 #FIN.......................
 
+INSTALAR RED UNIVERSITARIA
 
+--> Borrar instalaciones previas
+cd cd ~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7
+./network.sh down
+
+cd ~/Documents/GitHub/hyperledger-fabric/
+
+git clone https://gitlab.com/STorres17/soluciones-blockchain.git
+
+cd ~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7
+
+#sudo apt install jq
+
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker volume prune
+docker network prune
+
+rm -rf organizations/peerOrganizations
+rm -rf organizations/ordererOrganizations
+rm -rf channel-artifacts/
+mkdir channel-artifacts
+
+export PATH=${PWD}/../bin:${PWD}:$PATH
+export FABRIC_CFG_PATH=${PWD}/../config
+cryptogen generate --config=./organizations/cryptogen/crypto-config-madrid.yaml --output="organizations"
+cryptogen generate --config=./organizations/cryptogen/crypto-config-bogota.yaml --output="organizations"
+cryptogen generate --config=./organizations/cryptogen/crypto-config-orderer.yaml --output="organizations"
+
+docker-compose -f docker/docker-compose-universidades.yaml up -d
+
+//ya tenemos arracanda la red con 1 orderer, 2 orgs y 2 couchdbs
+//habrá que crear los canales
+
+export FABRIC_CFG_PATH=${PWD}/configtx
+configtxgen -profile UniversidadesGenesis -outputBlock ./channel-artifacts/universidadeschannel.block -channelID universidadeschannel
+export FABRIC_CFG_PATH=${PWD}/../config
+export ORDERER_CA=${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/msp/tlscacerts/tlsca.universidades.com-cert.pem
+export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/tls/server.crt
+export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/tls/server.key
+
+osnadmin channel join --channelID universidadeschannel --config-block ./channel-artifacts/universidadeschannel.block -o localhost:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+osnadmin channel list -o localhost:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+
+export CORE_PEER_TLS_ENABLED=true
+export PEER0_MADRID_CA=${PWD}/organizations/peerOrganizations/madrid.universidades.com/peers/peer0.madrid.universidades.com/tls/ca.crt
+export CORE_PEER_LOCALMSPID="MadridMSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MADRID_CA
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/madrid.universidades.com/users/Admin@madrid.universidades.com/msp
+export CORE_PEER_ADDRESS=localhost:7051
+peer channel join -b ./channel-artifacts/universidadeschannel.block
+
+export PEER0_BOGOTA_CA=${PWD}/organizations/peerOrganizations/bogota.universidades.com/peers/peer0.bogota.universidades.com/tls/ca.crt
+export CORE_PEER_LOCALMSPID="BogotaMSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_BOGOTA_CA
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/bogota.universidades.com/users/Admin@bogota.universidades.com/msp
+export CORE_PEER_ADDRESS=localhost:9051
+peer channel join -b ./channel-artifacts/universidadeschannel.block
+
+--> REVISAR DOCKERS Y SUS LOGS
 # ------------------ ADICIÓN DE UNA ORGANIZACIÓN A LA RED UNIVERSITARIA ------------------
 # Configurar las variables de entorno necesarias
 export PATH=${PWD}/../bin:${PWD}:$PATH
