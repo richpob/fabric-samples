@@ -7,7 +7,7 @@ Organizations:
     - &OrdererOrg
         Name: OrdererOrg
         ID: OrdererMSP
-        MSPDir: ../organizations/ordererOrganizations/universidadesg7.com/msp
+        MSPDir: ../organizations/ordererOrganizations/universidadesiebs.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -20,13 +20,13 @@ Organizations:
                 Rule: "OR('OrdererMSP.admin')"
 
         OrdererEndpoints:
-            - orderer.universidadesg7.com:7050
+            - orderer.universidadesiebs.com:7050
 
     - &Iebs
         Name: IebsMSP
         ID: IebsMSP
 
-        MSPDir: ../organizations/peerOrganizations/iebs.universidadesg7.com/msp
+        MSPDir: ../organizations/peerOrganizations/iebs.universidadesiebs.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -45,7 +45,7 @@ Organizations:
         Name: CantabriaMSP
         ID: CantabriaMSP
 
-        MSPDir: ../organizations/peerOrganizations/cantabria.universidadesg7.com/msp
+        MSPDir: ../organizations/peerOrganizations/cantabria.universidadesiebs.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -101,13 +101,13 @@ Application: &ApplicationDefaults
 Orderer: &OrdererDefaults
     OrdererType: etcdraft
     Addresses:
-        - orderer.universidadesg7.com:7050
+        - orderer.universidadesiebs.com:7050
     EtcdRaft:
         Consenters:
-        - Host: orderer.universidadesg7.com
+        - Host: orderer.universidadesiebs.com
           Port: 7050
-          ClientTLSCert: ../organizations/ordererOrganizations/universidadesg7.com/orderers/orderer.universidadesg7.com/tls/server.crt
-          ServerTLSCert: ../organizations/ordererOrganizations/universidadesg7.com/orderers/orderer.universidadesg7.com/tls/server.crt
+          ClientTLSCert: ../organizations/ordererOrganizations/universidadesiebs.com/orderers/orderer.universidadesiebs.com/tls/server.crt
+          ServerTLSCert: ../organizations/ordererOrganizations/universidadesiebs.com/orderers/orderer.universidadesiebs.com/tls/server.crt
 
     BatchTimeout: 2s
     BatchSize:

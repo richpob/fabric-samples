@@ -1,9 +1,9 @@
 version: '3.7'
 
 volumes:
-  orderer.universidadesg7.com:
-  peer0.iebs.universidadesg7.com:
-  peer0.cantabria.universidadesg7.com:
+  orderer.universidadesiebs.com:
+  peer0.iebs.universidadesiebs.com:
+  peer0.cantabria.universidadesiebs.com:
 
 networks:
   test:
@@ -11,8 +11,8 @@ networks:
 
 services:
 
-  orderer.universidadesg7.com:
-    container_name: orderer.universidadesg7.com
+  orderer.universidadesiebs.com:
+    container_name: orderer.universidadesiebs.com
     image: hyperledger/fabric-orderer:2.3.3
     labels:
       service: hyperledger-fabric
@@ -42,9 +42,9 @@ services:
     command: orderer
     volumes:
         - ../system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-        - ../organizations/ordererOrganizations/universidadesg7.com/orderers/orderer.universidadesg7.com/msp:/var/hyperledger/orderer/msp
-        - ../organizations/ordererOrganizations/universidadesg7.com/orderers/orderer.universidadesg7.com/tls/:/var/hyperledger/orderer/tls
-        - orderer.universidadesg7.com:/var/hyperledger/production/orderer
+        - ../organizations/ordererOrganizations/universidadesiebs.com/orderers/orderer.universidadesiebs.com/msp:/var/hyperledger/orderer/msp
+        - ../organizations/ordererOrganizations/universidadesiebs.com/orderers/orderer.universidadesiebs.com/tls/:/var/hyperledger/orderer/tls
+        - orderer.universidadesiebs.com:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
       - 7053:7053
@@ -65,8 +65,8 @@ services:
     networks:
       - test
 
-  peer0.iebs.universidadesg7.com:
-    container_name: peer0.iebs.universidadesg7.com
+  peer0.iebs.universidadesiebs.com:
+    container_name: peer0.iebs.universidadesiebs.com
     image: hyperledger/fabric-peer:2.3.3
     labels:
       service: hyperledger-fabric
@@ -79,13 +79,13 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-      - CORE_PEER_ID=peer0.iebs.universidadesg7.com
-      - CORE_PEER_ADDRESS=peer0.iebs.universidadesg7.com:7051
+      - CORE_PEER_ID=peer0.iebs.universidadesiebs.com
+      - CORE_PEER_ADDRESS=peer0.iebs.universidadesiebs.com:7051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.iebs.universidadesg7.com:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.iebs.universidadesiebs.com:7052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.iebs.universidadesg7.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.iebs.universidadesg7.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.iebs.universidadesiebs.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.iebs.universidadesiebs.com:7051
       - CORE_PEER_LOCALMSPID=IebsMSP
       - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:17051
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
@@ -94,9 +94,9 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
-        - ../organizations/peerOrganizations/iebs.universidadesg7.com/peers/peer0.iebs.universidadesg7.com/msp:/etc/hyperledger/fabric/msp
-        - ../organizations/peerOrganizations/iebs.universidadesg7.com/peers/peer0.iebs.universidadesg7.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.iebs.universidadesg7.com:/var/hyperledger/production
+        - ../organizations/peerOrganizations/iebs.universidadesiebs.com/peers/peer0.iebs.universidadesiebs.com/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/iebs.universidadesiebs.com/peers/peer0.iebs.universidadesiebs.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.iebs.universidadesiebs.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
@@ -120,8 +120,8 @@ services:
     networks:
       - test
 
-  peer0.cantabria.universidadesg7.com:
-    container_name: peer0.cantabria.universidadesg7.com
+  peer0.cantabria.universidadesiebs.com:
+    container_name: peer0.cantabria.universidadesiebs.com
     image: hyperledger/fabric-peer:2.3.3
     labels:
       service: hyperledger-fabric
@@ -134,13 +134,13 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-      - CORE_PEER_ID=peer0.cantabria.universidadesg7.com
-      - CORE_PEER_ADDRESS=peer0.cantabria.universidadesg7.com:9051
+      - CORE_PEER_ID=peer0.cantabria.universidadesiebs.com
+      - CORE_PEER_ADDRESS=peer0.cantabria.universidadesiebs.com:9051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.cantabria.universidadesg7.com:9052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.cantabria.universidadesiebs.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.cantabria.universidadesg7.com:9051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.cantabria.universidadesg7.com:9051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.cantabria.universidadesiebs.com:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.cantabria.universidadesiebs.com:9051
       - CORE_PEER_LOCALMSPID=CantabriaMSP
       - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:19051
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
@@ -149,9 +149,9 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
-        - ../organizations/peerOrganizations/cantabria.universidadesg7.com/peers/peer0.cantabria.universidadesg7.com/msp:/etc/hyperledger/fabric/msp
-        - ../organizations/peerOrganizations/cantabria.universidadesg7.com/peers/peer0.cantabria.universidadesg7.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.cantabria.universidadesg7.com:/var/hyperledger/production
+        - ../organizations/peerOrganizations/cantabria.universidadesiebs.com/peers/peer0.cantabria.universidadesiebs.com/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/cantabria.universidadesiebs.com/peers/peer0.cantabria.universidadesiebs.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.cantabria.universidadesiebs.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
@@ -178,7 +178,7 @@ services:
     volumes:
         - ../organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations
     depends_on:
-      - peer0.iebs.universidadesg7.com
-      - peer0.cantabria.universidadesg7.com
+      - peer0.iebs.universidadesiebs.com
+      - peer0.cantabria.universidadesiebs.com
     networks:
       - test

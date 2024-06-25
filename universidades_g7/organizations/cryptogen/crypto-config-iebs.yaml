@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------
 PeerOrgs:
   - Name: Iebs
-    Domain: iebs.universidadesg7.com
+    Domain: iebs.universidadesiebs.com
     EnableNodeOUs: true
     Template:
       Count: 1
