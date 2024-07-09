@@ -51,8 +51,8 @@ if [[ $ejecutar == "s" ]]; then
   # Paso 6: Crear certificados de las Org
   export PATH=${PWD}/../bin:${PWD}:$PATH
   export FABRIC_CFG_PATH=${PWD}/../config
-  cryptogen generate --config=./organizations/cryptogen/crypto-config-mop.yaml --output="organizations"
-  cryptogen generate --config=./organizations/cryptogen/crypto-config-ruta78.yaml --output="organizations"
+  cryptogen generate --config=./organizations/cryptogen/crypto-config-iebs.yaml --output="organizations"
+  cryptogen generate --config=./organizations/cryptogen/crypto-config-cantabria.yaml --output="organizations"
   cryptogen generate --config=./organizations/cryptogen/crypto-config-orderer.yaml --output="organizations"
 fi
 
@@ -97,5 +97,8 @@ if [[ $ejecutar == "s" ]]; then
   export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/users/Admin@ruta78.autopistasmop.com/msp
   export CORE_PEER_ADDRESS=localhost:9051
   peer channel join -b ./channel-artifacts/autopistaschannel.block
+  export FABRIC_CFG_PATH=$PWD/../config/
+  peer channel list
+
 fi
 
