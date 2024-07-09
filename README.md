@@ -1,3 +1,6 @@
+![docker_compose_diagram](https://github.com/richpob/fabric-samples/assets/133718913/f79b9215-f11e-446f-927e-288775dfbe00)
+
+
 ![image](https://github.com/richpob/fabric-samples/assets/133718913/57ce7204-5495-4a50-aeb0-cd83134878d4)
 
 ![image](https://github.com/richpob/fabric-samples/assets/133718913/ae643bd9-7b99-4116-a190-5f99caed6b37)
