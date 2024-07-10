@@ -1,0 +1,166 @@
+---
+################################################################################
+#   Section: Organizations
+################################################################################
+Organizations:
+
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: ../organizations/ordererOrganizations/autopistasmop.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+
+        OrdererEndpoints:
+            - orderer.autopistasmop.com:7050
+
+    - &Mop
+        Name: MopMSP
+        ID: MopMSP
+
+        MSPDir: ../organizations/peerOrganizations/mop.autopistasmop.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('MopMSP.admin', 'MopMSP.peer', 'MopMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('MopMSP.admin', 'MopMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('MopMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('MopMSP.peer')"
+
+    - &Ruta78
+        Name: Ruta78MSP
+        ID: Ruta78MSP
+
+        MSPDir: ../organizations/peerOrganizations/ruta78.autopistasmop.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Ruta78MSP.admin', 'Ruta78MSP.peer', 'Ruta78MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Ruta78MSP.admin', 'Ruta78MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Ruta78MSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('Ruta78MSP.peer')"
+
+################################################################################
+#   SECTION: Capabilities
+################################################################################
+Capabilities:
+    Channel: &ChannelCapabilities
+        V2_0: true
+    Orderer: &OrdererCapabilities
+        V2_0: true
+    Application: &ApplicationCapabilities
+        V2_0: true
+
+################################################################################
+#   SECTION: Application
+################################################################################
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+
+    Capabilities:
+        <<: *ApplicationCapabilities
+################################################################################
+#   SECTION: Orderer
+################################################################################
+Orderer: &OrdererDefaults
+    OrdererType: etcdraft
+    Addresses:
+        - orderer.autopistasmop.com:7050
+    EtcdRaft:
+        Consenters:
+        - Host: orderer.autopistasmop.com
+          Port: 7050
+          ClientTLSCert: ../organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/tls/server.crt
+          ServerTLSCert: ../organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/tls/server.crt
+
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+################################################################################
+#   CHANNEL
+################################################################################
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+################################################################################
+#   Profile
+################################################################################
+Profiles:
+
+    UniversidadesGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Mop
+                - *Ruta78
+            Capabilities: *ApplicationCapabilities
