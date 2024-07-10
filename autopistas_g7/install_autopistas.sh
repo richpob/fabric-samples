@@ -79,6 +79,7 @@ fi
 read -p "¿Deseas ejecutar el Paso 9 (Adherir Org1 al Orderer)? (s/n): " ejecutar
 if [[ $ejecutar == "s" ]]; then
   # Paso 9: Adherir Org1 al Orderer
+  export FABRIC_CFG_PATH=${PWD}/../config
   export CORE_PEER_TLS_ENABLED=true
   export PEER0_MOP_CA=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/peers/peer0.mop.autopistasmop.com/tls/ca.crt
   export CORE_PEER_LOCALMSPID="MopMSP"
@@ -91,6 +92,7 @@ fi
 read -p "¿Deseas ejecutar el Paso 10 (Adherir Org2 al Orderer)? (s/n): " ejecutar
 if [[ $ejecutar == "s" ]]; then
   # Paso 10: Adherir Org2 al Orderer
+  export FABRIC_CFG_PATH=${PWD}/../config
   export PEER0_RUTA78_CA=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/peers/peer0.ruta78.autopistasmop.com/tls/ca.crt
   export CORE_PEER_LOCALMSPID="Ruta78MSP"
   export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_RUTA78_CA
