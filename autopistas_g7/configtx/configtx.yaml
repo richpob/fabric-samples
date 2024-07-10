@@ -22,43 +22,43 @@ Organizations:
         OrdererEndpoints:
             - orderer.autopistasmop.com:7050
 
-    - &Iebs
-        Name: IebsMSP
-        ID: IebsMSP
+    - &Mop
+        Name: MopMSP
+        ID: MopMSP
 
         MSPDir: ../organizations/peerOrganizations/mop.autopistasmop.com/msp
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('IebsMSP.admin', 'IebsMSP.peer', 'IebsMSP.client')"
+                Rule: "OR('MopMSP.admin', 'MopMSP.peer', 'MopMSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('IebsMSP.admin', 'IebsMSP.client')"
+                Rule: "OR('MopMSP.admin', 'MopMSP.client')"
             Admins:
                 Type: Signature
-                Rule: "OR('IebsMSP.admin')"
+                Rule: "OR('MopMSP.admin')"
             Endorsement:
                 Type: Signature
-                Rule: "OR('IebsMSP.peer')"
+                Rule: "OR('MopMSP.peer')"
 
-    - &Cantabria
-        Name: CantabriaMSP
-        ID: CantabriaMSP
+    - &Ruta78
+        Name: Ruta78MSP
+        ID: Ruta78MSP
 
         MSPDir: ../organizations/peerOrganizations/ruta78.autopistasmop.com/msp
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('CantabriaMSP.admin', 'CantabriaMSP.peer', 'CantabriaMSP.client')"
+                Rule: "OR('Ruta78MSP.admin', 'Ruta78MSP.peer', 'Ruta78MSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('CantabriaMSP.admin', 'CantabriaMSP.client')"
+                Rule: "OR('Ruta78MSP.admin', 'Ruta78MSP.client')"
             Admins:
                 Type: Signature
-                Rule: "OR('CantabriaMSP.admin')"
+                Rule: "OR('Ruta78MSP.admin')"
             Endorsement:
                 Type: Signature
-                Rule: "OR('CantabriaMSP.peer')"
+                Rule: "OR('Ruta78MSP.peer')"
 
 ################################################################################
 #   SECTION: Capabilities
@@ -161,6 +161,6 @@ Profiles:
         Application:
             <<: *ApplicationDefaults
             Organizations:
-                - *Iebs
-                - *Cantabria
+                - *Mop
+                - *Ruta78
             Capabilities: *ApplicationCapabilities
