@@ -51,8 +51,8 @@ if [[ $ejecutar == "s" ]]; then
   # Paso 6: Crear certificados de las Org
   export PATH=${PWD}/../bin:${PWD}:$PATH
   export FABRIC_CFG_PATH=${PWD}/../config
-  cryptogen generate --config=./organizations/cryptogen/crypto-config-iebs.yaml --output="organizations"
-  cryptogen generate --config=./organizations/cryptogen/crypto-config-cantabria.yaml --output="organizations"
+  cryptogen generate --config=./organizations/cryptogen/crypto-config-mop.yaml --output="organizations"
+  cryptogen generate --config=./organizations/cryptogen/crypto-config-ruta78.yaml --output="organizations"
   cryptogen generate --config=./organizations/cryptogen/crypto-config-orderer.yaml --output="organizations"
 fi
 
@@ -80,9 +80,9 @@ read -p "¿Deseas ejecutar el Paso 9 (Adherir Org1 al Orderer)? (s/n): " ejecuta
 if [[ $ejecutar == "s" ]]; then
   # Paso 9: Adherir Org1 al Orderer
   export CORE_PEER_TLS_ENABLED=true
-  export PEER0_IEBS_CA=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/peers/peer0.mop.autopistasmop.com/tls/ca.crt
-  export CORE_PEER_LOCALMSPID="IebsMSP"
-  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_IEBS_CA
+  export PEER0_MOP_CA=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/peers/peer0.mop.autopistasmop.com/tls/ca.crt
+  export CORE_PEER_LOCALMSPID="MopMSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MOP_CA
   export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/users/Admin@mop.autopistasmop.com/msp
   export CORE_PEER_ADDRESS=localhost:7051
   peer channel join -b ./channel-artifacts/autopistaschannel.block
@@ -91,14 +91,11 @@ fi
 read -p "¿Deseas ejecutar el Paso 10 (Adherir Org2 al Orderer)? (s/n): " ejecutar
 if [[ $ejecutar == "s" ]]; then
   # Paso 10: Adherir Org2 al Orderer
-  export PEER0_CANTABRIA_CA=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/peers/peer0.ruta78.autopistasmop.com/tls/ca.crt
-  export CORE_PEER_LOCALMSPID="CantabriaMSP"
-  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_CANTABRIA_CA
+  export PEER0_RUTA78_CA=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/peers/peer0.ruta78.autopistasmop.com/tls/ca.crt
+  export CORE_PEER_LOCALMSPID="Ruta78MSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_RUTA78_CA
   export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/users/Admin@ruta78.autopistasmop.com/msp
   export CORE_PEER_ADDRESS=localhost:9051
   peer channel join -b ./channel-artifacts/autopistaschannel.block
-  export FABRIC_CFG_PATH=$PWD/../config/
-  peer channel list
-
 fi
 
