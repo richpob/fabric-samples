@@ -9,7 +9,7 @@
 
 
 ## Resultado de proceso de compilacion, deploy y consulta de contrato
-''' Bash
+```javascript
 ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ go mod tidy
 ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ GO111MODULE=on go mod vendor
 ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ go build
@@ -147,4 +147,4 @@ Version: 1.0, Sequence: 1, Endorsement Plugin: escc, Validation Plugin: vscc, Ap
 ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer chaincode query -C autopistaschannel -n tollchaincode -c '{"function":"QueryTollRecord","Args":["0xc83273f025ecEd0317f52DfE26d95C4638a10D7E"]}'
 {"num_contrato_cliente":"0xc83273f025ecEd0317f52DfE26d95C4638a10D7E","placa_matricula":"HSGT62","fecha_hora_tx":"Tue Jul  9 18:21:58 -04 2024","num_portico":"P004","precio_clp":540}
 ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ 
-'''
+```javascript
