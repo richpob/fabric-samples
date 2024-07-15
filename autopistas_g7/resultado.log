@@ -1,81 +1,72 @@
-¿Deseas ejecutar el Paso 1 (Borrar instancias de Dockers y redes)? (s/n): s
-162ae9e5d1cc
-1d8707a88c0b
-37790c4bae6e
-66aec9d4c423
-e07786f4c0c4
-95a6bce96c7f
-Total reclaimed space: 0B
-Total reclaimed space: 0B
-Using docker and docker-compose
-Stopping network
-Removing remaining containers
-162ae9e5d1cc
-1d8707a88c0b
-37790c4bae6e
-66aec9d4c423
-e07786f4c0c4
-95a6bce96c7f
-Removing generated chaincode docker images
-¿Deseas ejecutar el Paso 2 (Clonar repo de base)? (s/n): n
-¿Deseas ejecutar el Paso 3 (Instalar editor de json)? (s/n): n
-¿Deseas ejecutar el Paso 4 (Borrar instancias de Dockers residuales)? (s/n): s
-Deleted Volumes:
-77cd8b81c0e1d6c518b78d4544c898edd52b65c3bf253e0492840457062b601f
-966d316c7c9655e2a132e743ca4d1523e0b169e1114c7bdb22e612d31ca4321f
-cbbdb83061548ccf44b5b125495b588722e17fdc9233b9f677474bdaca9117ac
-114457360bf354f5fd0529c82dbe0029836a9c8cec7426d738476f7368ffec63
-0e7383e3ee6e758dfb28af29a51acb02a7fe96c292ac7461c00f31dd48eb0dfd
-ebda0eb83edd1990ef7f071235cf82a9d2de19c90a8b239e7d7d322b502c89cb
-4089cd14e4604c1c9c6574c4b31688bafa0850851274443b4e1150e454811624
-729a781d43e5c8f02f0e04acf8fc1b67ae0125ef9502e5626c79f5ed6f350a9e
-1e1b4fc4f0cb900e96e53a06d16db569a48de87d52e383dfde662bc414faa43e
-d310fcc2772fdf8afd74f9518e658aa22816842f90e4612707c94e22e3e7cf82
-
-Total reclaimed space: 425.2kB
-Deleted Networks:
-autopistas_g7_network
-
-¿Deseas ejecutar el Paso 5 (Borrar carpetas de certificados y artefactos)? (s/n): s
-¿Deseas ejecutar el Paso 6 (Crear certificados de las Org)? (s/n): s
-mop.autopistasmop.com
-ruta78.autopistasmop.com
-¿Deseas ejecutar el Paso 7 (Arrancar la red con 1 orderer, 2 orgs y 2 couchdbs)? (s/n): s
-Creating network "autopistas_g7_network" with the default driver
-Creating orderer.autopistasmop.com ... done
-Creating couchdb1                    ... done
-Creating couchdb0                  ... done
-Creating peer0.mop.autopistasmop.com    ... done
-Creating peer0.ruta78.autopistasmop.com ... done
-Creating cli                            ... done
-¿Deseas ejecutar el Paso 8 (Crear los canales)? (s/n): s
-2024-07-10 14:41:21.534 -04 [common.tools.configtxgen] main -> INFO 001 Loading configuration
-2024-07-10 14:41:21.537 -04 [common.tools.configtxgen.localconfig] completeInitialization -> INFO 002 orderer type: etcdraft
-2024-07-10 14:41:21.537 -04 [common.tools.configtxgen.localconfig] completeInitialization -> INFO 003 Orderer.EtcdRaft.Options unset, setting to tick_interval:"500ms" election_tick:10 heartbeat_tick:1 max_inflight_blocks:5 snapshot_interval_size:16777216 
-2024-07-10 14:41:21.537 -04 [common.tools.configtxgen.localconfig] Load -> INFO 004 Loaded configuration: /home/ubuntu/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/configtx/configtx.yaml
-2024-07-10 14:41:21.538 -04 [common.tools.configtxgen] doOutputBlock -> INFO 005 Generating genesis block
-2024-07-10 14:41:21.538 -04 [common.tools.configtxgen] doOutputBlock -> INFO 006 Creating application channel genesis block
-2024-07-10 14:41:21.539 -04 [common.tools.configtxgen] doOutputBlock -> INFO 007 Writing genesis block
-Status: 405
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ rm -rf organizations/peerOrganizations
+rm -rf organizations/ordererOrganizations
+rm -rf channel-artifacts/
+mkdir channel-artifacts
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ export PATH=${PWD}/../bin:${PWD}:$PATH
+export FABRIC_CFG_PATH=${PWD}/../config
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ cryptogen generate --config=./organizations/cryptogen/crypto-config-iebs.yaml --output="organizations"
+cryptogen generate --config=./organizations/cryptogen/crypto-config-cantabria.yaml --output="organizations"
+cryptogen generate --config=./organizations/cryptogen/crypto-config-orderer.yaml --output="organizations"
+iebs.universidadesiebs.com
+cantabria.universidadesiebs.com
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ docker-compose -f docker/docker-compose-universidades.yaml up -d
+Creating couchdb1                      ... done
+Creating orderer.universidadesiebs.com ... done
+Creating couchdb0                      ... done
+Creating peer0.cantabria.universidadesiebs.com ... done
+Creating peer0.iebs.universidadesiebs.com      ... done
+Creating cli                                   ... done
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ export FABRIC_CFG_PATH=${PWD}/configtx
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ configtxgen -profile UniversidadesGenesis -outputBlock ./channel-artifacts/universidadeschannel.block -channelID universidadeschannel
+2024-06-25 10:08:50.561 -04 [common.tools.configtxgen] main -> INFO 001 Loading configuration
+2024-06-25 10:08:50.565 -04 [common.tools.configtxgen.localconfig] completeInitialization -> INFO 002 orderer type: etcdraft
+2024-06-25 10:08:50.565 -04 [common.tools.configtxgen.localconfig] completeInitialization -> INFO 003 Orderer.EtcdRaft.Options unset, setting to tick_interval:"500ms" election_tick:10 heartbeat_tick:1 max_inflight_blocks:5 snapshot_interval_size:16777216 
+2024-06-25 10:08:50.565 -04 [common.tools.configtxgen.localconfig] Load -> INFO 004 Loaded configuration: /home/ubuntu/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7/configtx/configtx.yaml
+2024-06-25 10:08:50.568 -04 [common.tools.configtxgen] doOutputBlock -> INFO 005 Generating genesis block
+2024-06-25 10:08:50.568 -04 [common.tools.configtxgen] doOutputBlock -> INFO 006 Creating application channel genesis block
+2024-06-25 10:08:50.568 -04 [common.tools.configtxgen] doOutputBlock -> INFO 007 Writing genesis block
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ export FABRIC_CFG_PATH=${PWD}/../config
+export ORDERER_CA=${PWD}/organizations/ordererOrganizations/universidadesiebs.com/orderers/orderer.universidadesiebs.com/msp/tlscacerts/tlsca.universidadesiebs.com-cert.pem
+export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/organizations/ordererOrganizations/universidadesiebs.com/orderers/orderer.universidadesiebs.com/tls/server.crt
+export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/organizations/ordererOrganizations/universidadesiebs.com/orderers/orderer.universidadesiebs.com/tls/server.key
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ osnadmin channel join --channelID universidadeschannel --config-block ./channel-artifacts/universidadeschannel.block -o localhost:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+Status: 201
 {
-        "error": "cannot join: channel already exists"
+        "name": "universidadeschannel",
+        "url": "/participation/v1/channels/universidadeschannel",
+        "consensusRelation": "consenter",
+        "status": "active",
+        "height": 1
 }
 
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ osnadmin channel list -o localhost:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 Status: 200
 {
         "systemChannel": null,
         "channels": [
                 {
-                        "name": "autopistaschannel",
-                        "url": "/participation/v1/channels/autopistaschannel"
+                        "name": "universidadeschannel",
+                        "url": "/participation/v1/channels/universidadeschannel"
                 }
         ]
 }
 
-¿Deseas ejecutar el Paso 9 (Adherir Org1 al Orderer)? (s/n): s
-2024-07-10 14:41:29.895 -04 [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
-2024-07-10 14:41:30.070 -04 [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
-¿Deseas ejecutar el Paso 10 (Adherir Org2 al Orderer)? (s/n): s
-2024-07-10 14:41:31.819 -04 [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
-2024-07-10 14:41:31.985 -04 [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ 
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ export CORE_PEER_TLS_ENABLED=true
+export PEER0_IEBS_CA=${PWD}/organizations/peerOrganizations/iebs.universidadesiebs.com/peers/peer0.iebs.universidadesiebs.com/tls/ca.crt
+export CORE_PEER_LOCALMSPID="IebsMSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_IEBS_CA
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/iebs.universidadesiebs.com/users/Admin@iebs.universidadesiebs.com/msp
+export CORE_PEER_ADDRESS=localhost:7051
+peer channel join -b ./channel-artifacts/universidadeschannel.block
+2024-06-25 10:09:41.411 -04 [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+2024-06-25 10:09:41.459 -04 [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ #Paso 10: Adherir Org2 al Orderer
+export PEER0_CANTABRIA_CA=${PWD}/organizations/peerOrganizations/cantabria.universidadesiebs.com/peers/peer0.cantabria.universidadesiebs.com/tls/ca.crt
+export CORE_PEER_LOCALMSPID="CantabriaMSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_CANTABRIA_CA
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/cantabria.universidadesiebs.com/users/Admin@cantabria.universidadesiebs.com/msp
+export CORE_PEER_ADDRESS=localhost:9051
+peer channel join -b ./channel-artifacts/universidadeschannel.block
+2024-06-25 10:09:53.623 -04 [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+2024-06-25 10:09:53.673 -04 [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/universidades_g7$ 

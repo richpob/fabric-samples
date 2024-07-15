@@ -73,4 +73,14 @@ find $BASE_DIR -type f \( -name '*universidades*.sh' -o -name '*universidades*.y
 done
 
 echo "Renombrado completado."
+rm ./autopistas_g7/configtx/configtx.yaml 
+rm ./autopistas_g7/docker/docker-compose*
+rm ./autopistas_g7/install_autopistas.sh 
+
+echo "Copia de fichero modificados MSP. Compose e Install"
+cp ./Otros/configtx.yaml ./autopistas_g7/configtx/
+cp ./Otros/docker-compose-autopistas.yaml ./autopistas_g7/docker/
+cp ./Otros/install_autopistas.sh ./autopistas_g7/
+
+
 
