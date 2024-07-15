@@ -34,8 +34,9 @@ peer lifecycle chaincode install toll.tar.gz
 peer lifecycle chaincode install toll.tar.gz 
 
 peer lifecycle chaincode queryinstalled
+
 //copiar el ID del package, es una combinación del nombre del chaincode y el hash del contenido del código
-export CC_PACKAGE_ID=toll2.0:5a333a60ba99e11d3ae6aa5dd9dc8e665485a1deb20a3bb0876a7f50f1678b3b
+export CC_PACKAGE_ID=toll_1.0:01466b191f54d341ed51be76037e082ee70d8131dbf1f1b3350f2e679138d443
 peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --channelID autopistaschannel --signature-policy "OR('MopMSP.member','Ruta78MSP.member')" --name tollchaincode --version 2.0 --package-id $CC_PACKAGE_ID --sequence 1 --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem
 
   export CORE_PEER_LOCALMSPID="MopMSP"
@@ -68,9 +69,14 @@ peer lifecycle chaincode querycommitted --channelID autopistaschannel --name tol
   export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_RUTA78_CA
   export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/users/Admin@ruta78.autopistasmop.com/msp
   export CORE_PEER_ADDRESS=localhost:9051
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem -C autopistaschannel -n tollchaincode --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/peers/peer0.ruta78.autopistasmop.com/tls/ca.crt -c '{"function":"InitLedger","Args":[]}'
 
-peer chaincode query -C autopistaschannel -n tollchaincode -c '{"Args":["QueryTollRecord"]}'
+  export CORE_PEER_LOCALMSPID="MopMSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MOP_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/users/Admin@mop.autopistasmop.com/msp
+  export CORE_PEER_ADDRESS=localhost:7051
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem -C autopistaschannel -n tollchaincode --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/peers/peer0.mop.autopistasmop.com/tls/ca.crt -c '{"function":"InitLedger","Args":[]}'
+
+peer chaincode query -C autopistaschannel -n tollchaincode -c '{"function":"QueryTollRecord","Args":["0xc83273f025ecEd0317f52DfE26d95C4638a10D7E"]}'
 
 peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem -C autopistaschannel -n tollchaincode --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/peers/peer0.ruta78.autopistasmop.com/tls/ca.crt -c '{"function":"CreateAsset","Args":["asset8","green","16","Sergio","750"]}'
 peer chaincode query -C autopistaschannel -n tollchaincode -c '{"Args":["QueryTollRecord"]}'

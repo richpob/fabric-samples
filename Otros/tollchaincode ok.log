@@ -1,0 +1,66 @@
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$   export FABRIC_CFG_PATH=${PWD}/../config
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode package toll.tar.gz --path chaincodes/ --lang golang --label toll_1.0
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ export CORE_PEER_TLS_ENABLED=true
+  export PEER0_MOP_CA=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/peers/peer0.mop.autopistasmop.com/tls/ca.crt
+  export CORE_PEER_LOCALMSPID="MopMSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MOP_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/users/Admin@mop.autopistasmop.com/msp
+  export CORE_PEER_ADDRESS=localhost:7051
+peer lifecycle chaincode install toll.tar.gz 
+2024-07-15 18:24:03.102 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nItoll_1.0:01466b191f54d341ed51be76037e082ee70d8131dbf1f1b3350f2e679138d443\022\010toll_1.0" > 
+2024-07-15 18:24:03.102 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: toll_1.0:01466b191f54d341ed51be76037e082ee70d8131dbf1f1b3350f2e679138d443
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ export FABRIC_CFG_PATH=${PWD}/../config
+  export PEER0_RUTA78_CA=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/peers/peer0.ruta78.autopistasmop.com/tls/ca.crt
+  export CORE_PEER_LOCALMSPID="Ruta78MSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_RUTA78_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/users/Admin@ruta78.autopistasmop.com/msp
+  export CORE_PEER_ADDRESS=localhost:9051
+peer lifecycle chaincode install toll.tar.gz 
+2024-07-15 18:24:31.116 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nItoll_1.0:01466b191f54d341ed51be76037e082ee70d8131dbf1f1b3350f2e679138d443\022\010toll_1.0" > 
+2024-07-15 18:24:31.116 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: toll_1.0:01466b191f54d341ed51be76037e082ee70d8131dbf1f1b3350f2e679138d443
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode queryinstalled
+Installed chaincodes on peer:
+Package ID: toll_1.0:01466b191f54d341ed51be76037e082ee70d8131dbf1f1b3350f2e679138d443, Label: toll_1.0
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ export CC_PACKAGE_ID=toll_1.0:01466b191f54d341ed51be76037e082ee70d8131dbf1f1b3350f2e679138d443
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --channelID autopistaschannel --signature-policy "OR('MopMSP.member','Ruta78MSP.member')" --name tollchaincode --version 2.0 --package-id $CC_PACKAGE_ID --sequence 1 --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem
+2024-07-15 18:25:39.974 -04 [chaincodeCmd] ClientWait -> INFO 001 txid [d60c683f6db73c825764a692f1d5c8bb8e0e6f5a23820b981aa7d1fa5c39a3b7] committed with status (VALID) at localhost:9051
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ export CORE_PEER_LOCALMSPID="MopMSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MOP_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/users/Admin@mop.autopistasmop.com/msp
+  export CORE_PEER_ADDRESS=localhost:7051
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --channelID autopistaschannel --signature-policy "OR('MopMSP.member','Ruta78MSP.member')" --name tollchaincode --version 1.0 --package-id $CC_PACKAGE_ID --sequence 1 --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem
+2024-07-15 18:25:59.260 -04 [chaincodeCmd] ClientWait -> INFO 001 txid [aeeb295dddedee6de1564c6a47ffb3b45b327467055f0ac419b821c99d883276] committed with status (VALID) at localhost:7051
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode checkcommitreadiness --channelID autopistaschannel --name tollchaincode --version 1.0 --sequence 1 --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem --output json
+{
+        "approvals": {
+                "MopMSP": false,
+                "Ruta78MSP": false
+        }
+}
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ export CORE_PEER_LOCALMSPID="Ruta78MSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_RUTA78_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/users/Admin@ruta78.autopistasmop.com/msp
+  export CORE_PEER_ADDRESS=localhost:9051
+
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --channelID autopistaschannel --signature-policy "OR('MopMSP.member','Ruta78MSP.member')" --name tollchaincode --version 1.0 --package-id $CC_PACKAGE_ID --sequence 1 --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem
+2024-07-15 18:26:28.472 -04 [chaincodeCmd] ClientWait -> INFO 001 txid [f626898cce15d7fd56d2b8855efaa986b266ec98a5bc3516a887a565fd1e852a] committed with status (VALID) at localhost:9051
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode checkcommitreadiness --channelID autopistaschannel --name tollchaincode --version 1.0 --sequence 1 --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem --output json
+{
+        "approvals": {
+                "MopMSP": false,
+                "Ruta78MSP": false
+        }
+}
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ export CORE_PEER_LOCALMSPID="MopMSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MOP_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/users/Admin@mop.autopistasmop.com/msp
+  export CORE_PEER_ADDRESS=localhost:7051
+peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --signature-policy "OR('MopMSP.member','Ruta78MSP.member')" --channelID autopistaschannel --name tollchaincode --version 1.0 --sequence 1 --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/peers/peer0.mop.autopistasmop.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/peers/peer0.ruta78.autopistasmop.com/tls/ca.crt
+2024-07-15 18:26:56.372 -04 [chaincodeCmd] ClientWait -> INFO 001 txid [d5535aec10d77a39943c13b567b07dbbea6673842fcb7fc98604090bc6d518f8] committed with status (VALID) at localhost:7051
+2024-07-15 18:26:56.375 -04 [chaincodeCmd] ClientWait -> INFO 002 txid [d5535aec10d77a39943c13b567b07dbbea6673842fcb7fc98604090bc6d518f8] committed with status (VALID) at localhost:9051
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode querycommitted --channelID autopistaschannel --name tollchaincode --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem
+Committed chaincode definition for chaincode 'tollchaincode' on channel 'autopistaschannel':
+Version: 1.0, Sequence: 1, Endorsement Plugin: escc, Validation Plugin: vscc, Approvals: [MopMSP: true, Ruta78MSP: true]
+
+ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem -C autopistaschannel -n tollchaincode --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/peers/peer0.mop.autopistasmop.com/tls/ca.crt -c '{"function":"InitLedger","Args":[]}'
+2024-07-15 18:32:54.103 -04 [chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200 

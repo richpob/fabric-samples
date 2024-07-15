@@ -13,7 +13,7 @@ type TollRecord struct {
 	PlacaMatricula     string `json:"placa_matricula"`
 	FechaHoraTx        string `json:"fecha_hora_tx"`
 	NumPortico         string `json:"num_portico"`
-	PrecioCLP          int    `json:"precio_clp"`cd
+	PrecioCLP          int    `json:"precio_clp"`
 }
 
 // SmartContract proporciona funciones para gestionar el registro de peajes
