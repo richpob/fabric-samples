@@ -7,6 +7,11 @@
 
 ![image](https://github.com/user-attachments/assets/e15b7af2-85b5-42bb-a2c7-a09613f4d5e1)
 
+## Objetos de CouchDB
+
+![image](https://github.com/user-attachments/assets/9464b16a-17ed-4b8e-b8ce-ddcf82bfa854)
+
+
 ## CouchDB desplegando contrato y primer registro 
 
 ![image](https://github.com/user-attachments/assets/2f0f362b-1943-43b9-a4ea-323741bc3226)
