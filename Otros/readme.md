@@ -7,6 +7,11 @@
 
 ![image](https://github.com/user-attachments/assets/e15b7af2-85b5-42bb-a2c7-a09613f4d5e1)
 
+## CouchDB desplegando contrato y primer registro 
+
+![image](https://github.com/user-attachments/assets/2f0f362b-1943-43b9-a4ea-323741bc3226)
+
+
 
 ## Resultado de proceso de compilacion, deploy y consulta de contrato
 ```javascript
