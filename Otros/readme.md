@@ -1,4 +1,4 @@
-# Imagenes del proyecto
+# Imagenes del proyecto y logs del contrato
 ## Docker 
 
 ![image](https://github.com/user-attachments/assets/0a408048-85bc-402c-ad14-475a2432ceb6)
