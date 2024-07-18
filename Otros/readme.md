@@ -1,4 +1,4 @@
-# Imagenes del proyecto
+# Imagenes del proyecto y logs del contrato
 ## Docker 
 
 ![image](https://github.com/user-attachments/assets/0a408048-85bc-402c-ad14-475a2432ceb6)
@@ -20,52 +20,6 @@
 
 ## Resultado de proceso de compilacion, deploy y consulta de contrato
 ```javascript
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ go mod tidy
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ GO111MODULE=on go mod vendor
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ go build
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ cd ..
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode package toll.tar.gz --path chaincodes/ --lang golang --label toll_1.0
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode install toll.tar.gz 
-2024-07-15 16:53:58.191 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nItoll_1.0:b248d81ff43f1754e2cd1607f9fd8840eac7c3e09455c75030125ef62e30c9c9\022\010toll_1.0" > 
-2024-07-15 16:53:58.191 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: toll_1.0:b248d81ff43f1754e2cd1607f9fd8840eac7c3e09455c75030125ef62e30c9c9
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ export FABRIC_CFG_PATH=${PWD}/../config
-  export PEER0_RUTA78_CA=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/peers/peer0.ruta78.autopistasmop.com/tls/ca.crt
-  export CORE_PEER_LOCALMSPID="Ruta78MSP"
-  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_RUTA78_CA
-  export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/users/Admin@ruta78.autopistasmop.com/msp
-  export CORE_PEER_ADDRESS=localhost:9051
-peer lifecycle chaincode install toll.tar.gz 
-2024-07-15 16:56:02.184 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nItoll_1.0:b248d81ff43f1754e2cd1607f9fd8840eac7c3e09455c75030125ef62e30c9c9\022\010toll_1.0" > 
-2024-07-15 16:56:02.184 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: toll_1.0:b248d81ff43f1754e2cd1607f9fd8840eac7c3e09455c75030125ef62e30c9c9
-
-
-SEGUNDO CONTRATO:
-
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ cd chaincodes/
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ go mod tidy
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ GO111MODULE=on go mod vendor
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ go build
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ cd ..
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode package tollchaincode.tar.gz --path chaincodes
-/ --lang golang --label toll2.0 
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode install tollchaincode.tar.gz 
-2024-07-15 17:02:06.918 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nHtoll2.0:5a333a60ba99e11d3ae6aa5dd9dc8e665485a1deb20a3bb0876a7f50f1678b3b\022\007toll2.0" > 
-2024-07-15 17:02:06.918 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: toll2.0:5a333a60ba99e11d3ae6aa5dd9dc8e665485a1deb20a3bb0876a7f50f1678b3b
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ export FABRIC_CFG_PATH=${PWD}/../config
-  export CORE_PEER_TLS_ENABLED=true
-  export PEER0_MOP_CA=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/peers/peer0.mop.autopistasmop.com/tls/ca.crt
-  export CORE_PEER_LOCALMSPID="MopMSP"
-  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MOP_CA
-  export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/mop.autopistasmop.com/users/Admin@mop.autopistasmop.com/msp
-  export CORE_PEER_ADDRESS=localhost:7051
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ peer lifecycle chaincode install tollchaincode.tar.gz 
-2024-07-15 17:03:03.198 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nHtoll2.0:5a333a60ba99e11d3ae6aa5dd9dc8e665485a1deb20a3bb0876a7f50f1678b3b\022\007toll2.0" > 
-2024-07-15 17:03:03.198 -04 [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: toll2.0:5a333a60ba99e11d3ae6aa5dd9dc8e665485a1deb20a3bb0876a7f50f1678b3b
-ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ 
-
-
-VERSION 2
-
 ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7$ cd chaincodes/
 ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ go mod tidy
 ubuntu@ubuntu:~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7/chaincodes$ GO111MODULE=on go mod vendor

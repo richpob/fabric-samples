@@ -79,6 +79,6 @@ peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.aut
 peer chaincode query -C autopistaschannel -n tollchaincode -c '{"function":"QueryTollRecord","Args":["0xc83273f025ecEd0317f52DfE26d95C4638a10D7E"]}'
 
 peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.autopistasmop.com --tls --cafile ${PWD}/organizations/ordererOrganizations/autopistasmop.com/orderers/orderer.autopistasmop.com/msp/tlscacerts/tlsca.autopistasmop.com-cert.pem -C autopistaschannel -n tollchaincode --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/ruta78.autopistasmop.com/peers/peer0.ruta78.autopistasmop.com/tls/ca.crt -c '{"function":"CreateAsset","Args":["asset8","green","16","Sergio","750"]}'
-peer chaincode query -C autopistaschannel -n tollchaincode -c '{"Args":["QueryTollRecord"]}'
+peer chaincode query -C autopistaschannel -n tollchaincode -c '{"function":"QueryTollRecord","Args":["0xc83273f025ecEd0317f52DfE26d95C4638a10D7E"]}'
 
 
