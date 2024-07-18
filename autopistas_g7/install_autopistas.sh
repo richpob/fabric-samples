@@ -13,19 +13,19 @@ if [[ $ejecutar == "s" ]]; then
   ./network.sh down
 fi
 
-read -p "¿Deseas ejecutar el Paso 2 (Clonar repo de base)? (s/n): " ejecutar
-if [[ $ejecutar == "s" ]]; then
-  # Paso 2: Clonar repo de base
-  cd ~/Documents/GitHub/hyperledger-fabric/
-  git clone https://gitlab.com/STorres17/soluciones-blockchain.git
-fi
+#read -p "¿Deseas ejecutar el Paso 2 (Clonar repo de base)? (s/n): " ejecutar
+#if [[ $ejecutar == "s" ]]; then
+#  # Paso 2: Clonar repo de base
+#  cd ~/Documents/GitHub/hyperledger-fabric/
+#  git clone https://gitlab.com/STorres17/soluciones-blockchain.git
+#fi
 
-read -p "¿Deseas ejecutar el Paso 3 (Instalar editor de json)? (s/n): " ejecutar
-if [[ $ejecutar == "s" ]]; then
+#read -p "¿Deseas ejecutar el Paso 3 (Instalar editor de json)? (s/n): " ejecutar
+#if [[ $ejecutar == "s" ]]; then
   # Paso 3: Instalar editor de json
-  cd ~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7
-  sudo apt install jq
-fi
+#  cd ~/Documents/GitHub/hyperledger-fabric/fabric-samples/autopistas_g7
+#  sudo apt install jq
+#fi
 
 read -p "¿Deseas ejecutar el Paso 4 (Borrar instancias de Dockers residuales)? (s/n): " ejecutar
 if [[ $ejecutar == "s" ]]; then

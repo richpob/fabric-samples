@@ -4,12 +4,12 @@ volumes:
   orderer.autopistasmop.com:
   peer0.mop.autopistasmop.com:
   peer0.ruta78.autopistasmop.com:
-  pgdata:
-  walletstore:
+  pgdata.autopistasmop.com:
+  walletstore.autopistasmop.com:
 
 networks:
-  test:
-    name: autopistas_g7
+  autopistas_g7:
+    name: autopistasmop.com
 
 services:
 
@@ -52,7 +52,7 @@ services:
       - 7053:7053
       - 17050:17050
     networks:
-      - test
+      - autopistas_g7
 
   couchdb0:
     container_name: couchdb0
@@ -65,7 +65,7 @@ services:
     ports:
       - "5984:5984"
     networks:
-      - test
+      - autopistas_g7
 
   peer0.mop.autopistasmop.com:
     container_name: peer0.mop.autopistasmop.com
@@ -105,7 +105,7 @@ services:
       - 7051:7051
       - 17051:17051
     networks:
-      - test
+      - autopistas_g7
     depends_on:
       - couchdb0
 
@@ -120,7 +120,7 @@ services:
     ports:
       - "7984:5984"
     networks:
-      - test
+      - autopistas_g7
 
   peer0.ruta78.autopistasmop.com:
     container_name: peer0.ruta78.autopistasmop.com
@@ -160,13 +160,13 @@ services:
       - 9051:9051
       - 19051:19051
     networks:
-      - test
+      - autopistas_g7
     depends_on:
       - couchdb1
 
   cli:
     container_name: cli
-    image: hyperledger/fabric-tools:latest
+    image: hyperledger/fabric-tools:laautopistas_g7
     labels:
       service: hyperledger-fabric
     tty: true
@@ -183,10 +183,10 @@ services:
       - peer0.mop.autopistasmop.com
       - peer0.ruta78.autopistasmop.com
     networks:
-      - test
+      - autopistas_g7
 
   explorerdb.autopistasmop.com:
-    image: ghcr.io/hyperledger-labs/explorer-db:latest
+    image: ghcr.io/hyperledger-labs/explorer-db:laautopistas_g7
     container_name: explorerdb.autopistasmop.com
     hostname: explorerdb.autopistasmop.com
     environment:
@@ -194,17 +194,17 @@ services:
       - DATABASE_USERNAME=hppoc
       - DATABASE_PASSWORD=password
     healthcheck:
-      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      autopistas_g7: "pg_isready -h localhost -p 5432 -q -U postgres"
       interval: 30s
       timeout: 10s
       retries: 5
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - test
+      - autopistas_g7
 
   explorer.autopistasmop.com:
-    image: ghcr.io/hyperledger-labs/explorer:latest
+    image: ghcr.io/hyperledger-labs/explorer:laautopistas_g7
     container_name: explorer.autopistasmop.com
     hostname: explorer.autopistasmop.com
     environment:
@@ -219,9 +219,9 @@ services:
       - DISCOVERY_AS_LOCALHOST=false
       - PORT=${PORT:-8080}
     volumes:
-      - .config.json:/opt/explorer/app/platform/fabric/config.json
-      - .connection-profile:/opt/explorer/app/platform/fabric/connection-profile
-      - ./organizations:/tmp/crypto
+      - ${EXPLORER_CONFIG_FILE_PATH}:/opt/explorer/app/platform/fabric/config.json
+      - ${EXPLORER_PROFILE_DIR_PATH}:/opt/explorer/app/platform/fabric/connection-profile
+      - ${FABRIC_CRYPTO_PATH}:/tmp/crypto
       - walletstore:/opt/explorer/wallet
     ports:
       - ${PORT:-8080}:${PORT:-8080}
@@ -229,4 +229,5 @@ services:
       explorerdb.autopistasmop.com:
         condition: service_healthy
     networks:
-      - test
+      - autopistas_g7
+

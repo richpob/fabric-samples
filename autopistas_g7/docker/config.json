@@ -1,0 +1,9 @@
+{
+	"network-configs": {
+		"autopistas_g7": {
+			"name": "autopistas_g7",
+			"profile": "./connection-profile/autopistas_g7.json"
+		}
+	},
+	"license": "Apache-2.0"
+}

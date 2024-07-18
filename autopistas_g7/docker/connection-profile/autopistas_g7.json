@@ -1,0 +1,48 @@
+{
+	"name": "test",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw"
+		},
+		"enableAuthentication": true,
+		"organization": "MopMSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"mychannel": {
+			"peers": {
+				"peer0.mop.autopistasmop.com": {}
+			}
+		}
+	},
+	"organizations": {
+		"MopMSP": {
+			"mspid": "MopMSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/mop.autopistasmop.com/users/User1@mop.autopistasmop.com/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0.mop.autopistasmop.com"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/mop.autopistasmop.com/users/User1@mop.autopistasmop.com/msp/signcerts/User1@mop.autopistasmop.com-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.mop.autopistasmop.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/mop.autopistasmop.com/peers/peer0.mop.autopistasmop.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.mop.autopistasmop.com:7051"
+		}
+	}
+}
